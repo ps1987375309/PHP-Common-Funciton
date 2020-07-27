@@ -42,7 +42,7 @@ function get_client_ip($type = 0, $adv = false) {
 
 /**
  * 删除文件及文件夹(可递归)
- * 前提文件给予可删除权限
+ * 前提需要文件夹给予可删除权限
  *
  * @param string $path
  *        	删除路径
