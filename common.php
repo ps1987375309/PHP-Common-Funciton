@@ -85,6 +85,7 @@ function delete_path($path, $recursion = true) {
 
 /**
  * 远程执行命令(注意语言环境，而且应避免删除等危险操作,显然也可以通过ssh连接其他主机执行操作)
+ * php需安装ssh2扩展
  *
  * @param string $ip
  *        	IP
@@ -249,11 +250,11 @@ function _echo($id, $message, $log_prefix = '', $type = true) {
 }
 
 /**
- * 检测文件编码
+ * 获取文件内容
  * 
  * @param string $file_path
  *        	文件路径
- * @return string $filesize 默认为空，获取文件的全部内容，如果仅需要获取文件编码类型，获取前一百个字符即可，配合detect_encoding方法使用
+ * @return string $filesize 默认为空，获取文件的全部内容，如果仅需要前面100个字符 ，则filesize=100
  * @return string 返回文件内容，自动换行
  */
 function fileToSrting($file_path, $filesize = '') {
@@ -304,7 +305,7 @@ function detect_encoding($file_path, $filesize = '1000') {
 }
 
 /**
- * 自动解析编码读入文件
+ * 自动解析编码读取文件内容
  * 
  * @param string $file_path
  *        	文件路径
