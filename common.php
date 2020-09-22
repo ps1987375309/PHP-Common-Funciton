@@ -1,5 +1,58 @@
 <?php
 /**
+ * http get
+ * @param string $strUrl  要访问的连接URL
+ * @return string   返回内容
+ */
+
+function httpGet($strUrl){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $strUrl);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$ret = curl_exec($ch);
+	curl_close($ch);
+	return $ret;
+}
+
+/**
+* http post
+* @param string $strUrl  要访问的连接URL
+* @return string
+*/
+
+function httpPost($strUrl, $postData){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $strUrl);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, urldecode(http_build_query($postData)));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	//执行并获取接口传的内容
+	$ret = curl_exec($ch);
+	$rinfo=curl_getinfo($ch);
+	curl_close($ch);
+	if (intval($rinfo["http_code"]) == 200) {
+		return $ret;
+	} else {
+		return false;
+	}
+}
+
+================================================================================================
+//以上两个方法的使用示例
+$params = array(
+	"Timestamp" => time(),
+	"PageIndex" => 1,
+	"PageSize" => 2000,
+);
+$strUrl = "https://oapi.campus.qq.com/v2/user?" . http_build_query($params);
+$ret = httpGet($strUrl);
+return $ret;
+
+=================================================================================================
+
+
+/**
  * 获取客户端IP地址
  * 
  * @param integer $type
